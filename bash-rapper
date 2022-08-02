@@ -1,0 +1,42 @@
+#!/bin/bash
+printHelp(){
+	echo "-r	-rhy 	Exact Rhymes"
+	echo "-n	-nry 	Near Rhymes"
+	echo "-s	-syn 	Synonyms"
+	echo "-a	-ant	Antonyms"
+	echo "-t	-trg	Triggers"
+	echo "-hm	-hom	Homopones"
+	echo "-c	-cns	Consonant Matches"
+	echo "-h	--help	Print Help"
+}
+
+if [ "$#" -gt 2 ]
+then
+	echo "Sorry, only single words are supported at this time"
+elif [ "$#" -lt 1 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]
+then
+	printHelp
+elif [ "$1" = "-r" ] || [ "$1" = "-rhy" ]
+then
+	curl https://api.datamuse.com/words\?rel_rhy\="${@:2}" | jq | less	
+elif [ "$1" = "-n" ] || [ "$1" = "-nry" ]
+then
+	curl https://api.datamuse.com/words\?rel_nry\="${@:2}" | jq | less	
+elif [ "$1" = "-s" ] || [ "$1" = "-syn" ]
+then
+	curl https://api.datamuse.com/words\?rel_syn\="${@:2}" | jq | less	
+elif [ "$1" = "-a" ] || [ "$1" = "-ant" ]
+then
+	curl https://api.datamuse.com/words\?rel_ant\="${@:2}" | jq | less	
+elif [ "$1" = "-t" ] || [ "$1" = "-trg" ]
+then
+	curl https://api.datamuse.com/words\?rel_trg\="${@:2}" | jq | less	
+elif [ "$1" = "-hm" ] || [ "$1" = "-hom" ]
+then
+	curl https://api.datamuse.com/words\?rel_hom\="${@:2}" | jq | less	
+elif [ "$1" = "-c" ] || [ "$1" = "-cns" ]
+then
+	curl https://api.datamuse.com/words\?rel_cns\="${@:2}" | jq | less	
+else	
+	curl https://api.datamuse.com/words\?rel_rhy\="$@" | jq | less
+fi
